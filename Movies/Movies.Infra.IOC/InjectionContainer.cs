@@ -1,8 +1,13 @@
 ﻿using System;
+using Autofac;
 
 namespace Movies.Infra.IOC
 {
-    public class Class1
+    public class InjectionContainer: Module
     {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<IMo,>()
+        }
     }
 }

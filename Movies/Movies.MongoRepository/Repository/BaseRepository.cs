@@ -8,9 +8,8 @@ using Movies.MongoRepository.ExtensionMethods;
 
 namespace Tmodels.MongoRepository.Repository
 {
-    public abstract class BaseRepository<Tmodel>:IMongoDBRepository<Tmodel>
+    public abstract class BaseRepository<Tmodel>:IMongoDBRepository<Tmodel> where Tmodel:class
     {
-
         protected IMongoClient Client { get; }
         protected IMongoDatabase Database { get; }
         protected IMongoCollection<Tmodel> Collection { get; }

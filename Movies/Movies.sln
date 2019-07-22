@@ -5,11 +5,15 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Domain", "Movies.Domain\Movies.Domain.csproj", "{A15FCEE1-0E26-4BC6-A277-7139B380BE6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.MongoRepository", "Movies.MongoRepository\Movies.MongoRepository.csproj", "{9B6E1B32-6BB6-455C-97FC-91FC899D87D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Mongo.Repository", "Movies.MongoRepository\Movies.Mongo.Repository.csproj", "{9B6E1B32-6BB6-455C-97FC-91FC899D87D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{FF3212F1-62C0-4264-BAA7-C29A9BD7AE0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infra.IOC", "Movies.Infra.IOC\Movies.Infra.IOC.csproj", "{6DD25E01-4CA6-4F10-81AF-08B6475DD09B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{D06A5B40-AC33-4555-86DB-7133CF4ED769}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9AB47C33-D159-4FB1-98AC-B0791CA783CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{A15FCEE1-0E26-4BC6-A277-7139B380BE6D} = {9AB47C33-D159-4FB1-98AC-B0791CA783CD}
+		{9B6E1B32-6BB6-455C-97FC-91FC899D87D4} = {D06A5B40-AC33-4555-86DB-7133CF4ED769}
 		{6DD25E01-4CA6-4F10-81AF-08B6475DD09B} = {FF3212F1-62C0-4264-BAA7-C29A9BD7AE0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
