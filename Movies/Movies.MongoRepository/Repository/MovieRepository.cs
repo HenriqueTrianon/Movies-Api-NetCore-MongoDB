@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using Movies.Domain.DTO;
 using Movies.Domain.Interfaces.Repository;
-using Movies.MongoRepository.ExtensionMethods;
-using Movies.MongoRepository.Models;
-using Tmodels.MongoRepository.Repository;
+using Movies.Mongo.Repository.Models;
 
-namespace Movies.MongoRepository.Repository
+namespace Movies.Mongo.Repository.Repository
 {
-    public class MovieRepository:BaseRepository<Movie>
+    public class MovieRepository:BaseRepository<MovieDto,Movie>,IMovieRepository<Movie,MovieDto>
     {
         protected override string DatabaseName { get; } = "movieapi";
         protected override string CollectionName { get; } = "movies";
         private IMongoCollection<Movie> MoviesCollection { get; }
         public MovieRepository(IMongoClient client) : base(client)
         {
+
         }
     }
 }

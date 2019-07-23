@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Movies.Domain.Interfaces.Services
 {
-    interface IServicoMongoDB<Tmodel>
+    public interface IServiceMongoDb<TModelDao>
     {
-        Task Insert(Tmodel model);
-        Task<List<Tmodel>> GetByField(string fieldName, string field);
+        Task Insert(TModelDao model);
+        Task<List<TModelDao>> GetByField(string fieldName, string field);
         Task<bool> Update(string id, string updateFieldName, string updateFieldValue);
         Task<bool> DeleteById(string id);
     }

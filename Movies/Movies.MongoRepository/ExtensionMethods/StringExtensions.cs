@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 
-namespace Movies.MongoRepository.ExtensionMethods
+namespace Movies.Mongo.Repository.ExtensionMethods
 {
     public static class StringExtensions
     {
