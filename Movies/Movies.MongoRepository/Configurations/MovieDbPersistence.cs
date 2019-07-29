@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Movies.Mongo.Repository.Configurations
 {
-    public class MongoDbPersistence
+    public class MovieDbPersistence
     {
         public static void Configure()
         {

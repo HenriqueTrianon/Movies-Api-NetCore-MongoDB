@@ -8,7 +8,7 @@ namespace Movies.Domain.Services
 {
     public class MovieService:BaseService<MovieDto,Movie>,IMovieService
     {
-        public MovieService(IMongoDbRepository<Movie, MovieDto> Repo, IMapper mapper) : base(Repo, mapper)
+        public MovieService(IMovieRepository Repo) : base(Repo)
         {
         }
     }

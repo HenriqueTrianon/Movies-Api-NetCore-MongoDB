@@ -11,10 +11,9 @@ namespace Movies.Domain.Services
         
         protected IMongoDbRepository<TModel,TModelDao> MongoDbRepository { get; }
         protected IMapper Mapper { get; }
-        protected BaseService(IMongoDbRepository<TModel,TModelDao> Repo, IMapper mapper)
+        protected BaseService(IMongoDbRepository<TModel,TModelDao> Repo)
         {
             MongoDbRepository = Repo;
-            Mapper = mapper;
         }
 
         public async Task Insert(TModelDao model) =>

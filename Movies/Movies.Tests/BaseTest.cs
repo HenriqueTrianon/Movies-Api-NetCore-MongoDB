@@ -1,4 +1,6 @@
 using Autofac;
+using AutoMapper;
+using Movies.Domain.Mapper;
 using Movies.Infra.IOC.Containers;
 using Movies.Mongo.Repository.Configurations;
 
@@ -11,7 +13,8 @@ namespace Movies.Tests
         protected BaseTest()
         {
             container = MovieContainerBuilder.Build();
-            MongoDbPersistence.Configure();
+            Mapper.Initialize(cfg => cfg.AddProfile<MoviesDomainProfile>());
+            MovieDbPersistence.Configure();
         }
     }
 }

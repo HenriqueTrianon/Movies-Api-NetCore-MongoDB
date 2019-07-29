@@ -5,29 +5,24 @@ using MongoDB.Driver;
 using Movies.Domain.DTO;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Models;
+using Movies.Mongo.Repository.Context;
 using Movies.Mongo.Repository.ExtensionMethods;
 namespace Movies.Mongo.Repository.Repository
 {
     public abstract class BaseRepository<TModelDto, TModel> : IMongoDbRepository<TModel, TModelDto> 
     {
-        protected IMongoClient Client { get; }
-        protected IMongoDatabase Database { get; }
         protected IMongoCollection<TModel> Collection { get; }
-        protected abstract string DatabaseName { get; }
         protected abstract string CollectionName { get; }
-        protected IMapper Mapper { get; }
-        protected BaseRepository(IMongoClient client,IMapper mapper)
+        protected BaseRepository( MoviesContext context)
         {
-            Client = client;
-            Database= Client.GetDatabase(DatabaseName);
-            Collection = Database.GetCollection<TModel>(CollectionName);
-            Mapper = mapper;
+            Collection = context.Database.GetCollection<TModel>(CollectionName);
         }
         public async Task Insert(TModelDto model) =>
-            await Collection.InsertOneAsync(Mapper.Map<TModel>(model));
+            await Collection.InsertOneAsync(AutoMapper.Mapper.Map<TModel>(model));
 
         public async Task<List<TModelDto>> GetAll() =>
-            await Collection.Find(null).Project<TModelDto>(null).ToListAsync();
+            await Collection.Find(Builders<TModel>.Filter.Empty).Project<TModelDto>(null).ToListAsync();
+
         public async Task<List<TModelDto>> GetByField(string fieldName, string fieldValue) =>
             await Collection.Find(Builders<TModel>.Filter.Eq(fieldName, fieldValue)).Project<TModelDto>(null).ToListAsync();
 
