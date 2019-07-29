@@ -2,14 +2,13 @@
 using Movies.Domain.DTO;
 using Movies.Domain.Models;
 
-namespace Movies.Mongo.Repository.Mapper
+namespace Movies.Domain.Mapper
 {
-    public class MongoRepositoryProfile:Profile
+    public class MoviesDomainProfile:Profile
     {
-        public MongoRepositoryProfile()
+        public MoviesDomainProfile()
         {
             CreateMap<Movie, MovieDto>().ReverseMap();
-
         }
     }
 }
