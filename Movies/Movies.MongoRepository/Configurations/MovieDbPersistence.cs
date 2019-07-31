@@ -2,11 +2,15 @@
 {
     public class MovieDbPersistence
     {
+        private static bool initialized = false;
         public static void Configure()
         {
-            BaseEntityConfig<object>.Configure();
-            MovieConfig.Configure();
-            
+            if (!initialized)
+            {
+                BaseEntityConfig<object>.Configure();
+                MovieConfig.Configure();
+            }
+            initialized = true;
         }
     }
 }

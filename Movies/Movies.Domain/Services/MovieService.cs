@@ -2,12 +2,11 @@
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Interfaces.Services;
 using Movies.Domain.Models;
-
 namespace Movies.Domain.Services
 {
     public class MovieService:BaseService<MovieDto,string,Movie>,IMovieService
     {
-        public MovieService(IMovieRepository Repo) : base(Repo)
+        public MovieService(IMovieRepository repository) : base(repository)
         {
         }
     }

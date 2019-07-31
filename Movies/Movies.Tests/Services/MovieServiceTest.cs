@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+using Autofac;
 using Movies.Domain.Interfaces.Services;
 using Movies.Tests.Mock;
 using Xunit;
@@ -21,24 +23,41 @@ namespace Movies.Tests.Services
         {
             var task = MovieService.Insert(MovieMocker.Get());
             task.Wait();
+            TestOutputHelper.WriteLine($"Inicializado");
         }
-
         [Fact]
         public void GetAllBookTest()
         {
-            var task = MovieService.GetAllAsync();
+            var task = MovieService.GetAll();
             task.Wait();
             var result = task.Result;
             foreach (var movieDto in result)
             {
-                TestOutputHelper.WriteLine($"{movieDto.Author} - {movieDto.BookName}");
+                TestOutputHelper.WriteLine($"{movieDto.Author} - {movieDto.Name}");
             }
         }
-
+        [Fact]
+        public void GetAllBookExpressionTest()
+        {
+            var task = MovieService.GetAll(e => e.Price > 70);
+            task.Wait();
+            var result = task.Result;
+            foreach (var movieDto in result)
+            {
+                TestOutputHelper.WriteLine($"{movieDto.Author} - {movieDto.Name}");
+            }
+        }
         [Fact]
         public void GetFirstBookTest()
         {
-
+            var task = MovieService.GetFirstorDefault(e => e.Author.StartsWith("Ca"));
+            task.Wait();
+            var movie = task.Result;
+            if (movie == null)
+            {
+                return;
+            }
+            TestOutputHelper.WriteLine($"{movie.Author} - {movie.Name}");
         }
     }
 }

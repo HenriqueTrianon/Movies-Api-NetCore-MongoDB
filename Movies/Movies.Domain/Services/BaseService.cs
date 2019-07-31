@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Interfaces.Services;
@@ -6,28 +8,31 @@ using Movies.Infra.Persistence;
 
 namespace Movies.Domain.Services
 {
-    public abstract class BaseService<TModelDao, TIndex,TModel>:IService<TModelDao, TIndex, TModel> where TModel : IEntity<TIndex>
+    public abstract class BaseService<TmodelDto, Tindex, TModel> : IService<TmodelDto, Tindex, TModel> where TModel : IEntity<Tindex>
     {
-        
-        protected IMongoDbRepository<TModel,TIndex,TModelDao> MongoDbRepository { get; }
-        protected BaseService(IMongoDbRepository<TModel,TIndex,TModelDao> Repo)
+        protected IMongoDbRepository<TModel, Tindex, TmodelDto> MongoDbRepository { get; }
+        protected BaseService(IMongoDbRepository<TModel, Tindex, TmodelDto> repository)
         {
-            MongoDbRepository = Repo;
+            MongoDbRepository = repository;
         }
 
-        public async Task Insert(TModelDao model) =>
+        public async Task Insert(TmodelDto model) =>
             await MongoDbRepository.Insert(model);
 
-        public async Task<List<TModelDao>> GetByField(string fieldName, string field) =>
-            await MongoDbRepository.GetByField(fieldName, field);
-
-        public async Task<List<TModelDao>> GetAllAsync() =>
+        public async Task<List<TmodelDto>> GetAll() =>
             await MongoDbRepository.GetAll();
 
-        public async Task<bool> Update(TIndex id, string updateFieldName, string updateFieldValue) =>
-            await MongoDbRepository.Update(id, updateFieldName, updateFieldValue);
+        public async Task<List<TmodelDto>> GetAll(Expression<Func<TModel, bool>> func) =>
+            await MongoDbRepository.GetAll(func);
 
-        public async Task<bool> DeleteById(TIndex id) =>
-            await MongoDbRepository.DeleteById(id);
+        public async Task<TmodelDto> GetFirstorDefault(Expression<Func<TModel, bool>> func) =>
+            await MongoDbRepository.GetFirstOrDefault(func);
+
+        public async Task Update(TmodelDto dto) =>
+            await MongoDbRepository.Update(dto);
+
+        public async Task<bool> DeleteById(Tindex id) =>
+            await MongoDbRepository.Delete(id);
+
     }
 }

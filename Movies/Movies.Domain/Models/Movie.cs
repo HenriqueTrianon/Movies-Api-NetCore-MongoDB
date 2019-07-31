@@ -2,9 +2,9 @@
 
 namespace Movies.Domain.Models
 {
-    public class Movie:BaseModifiableEntity<string>
+    public class Movie:BaseEntity<string>
     {
-        public string BookName { get; set; }
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 

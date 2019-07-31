@@ -1,3 +1,4 @@
+using System;
 using Autofac;
 using AutoMapper;
 using Movies.Domain.Mapper;
@@ -6,7 +7,7 @@ using Movies.Mongo.Repository.Configurations;
 
 namespace Movies.Tests
 {
-    public abstract class BaseTest
+    public abstract class BaseTest:IDisposable
     {
         protected IContainer container;
 
@@ -14,7 +15,15 @@ namespace Movies.Tests
         {
             container = MovieContainerBuilder.Build();
             Mapper.Initialize(cfg => cfg.AddProfile<MoviesDomainProfile>());
+           
             MovieDbPersistence.Configure();
+        }
+
+        public void Dispose()
+        {
+            container?.Dispose();
+            Mapper.Reset();
+            
         }
     }
 }

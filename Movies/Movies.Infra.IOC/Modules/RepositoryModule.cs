@@ -13,7 +13,7 @@ namespace Movies.Infra.IOC.Modules
             builder.RegisterType<MoviesContext>()
        .WithParameter(
            (pi, ctx) => pi.ParameterType == typeof(string) && pi.Name == "connection",
-           (pi, ctx) => "mongodb://localhost:27017")
+           (pi, ctx) => "localhost")
        .WithParameter(
            (pi, ctx) => pi.ParameterType == typeof(string) && pi.Name == "dataBaseName",
            (pi, ctx) => "movies");

@@ -14,7 +14,7 @@ namespace Movies.Tests.Mock
             //Pick some fruit from a basket
             .RuleFor(o => o.Author, f => f.Name.FirstName())
             //A random quantity from 1 to 10
-            .RuleFor(o => o.BookName, f => f.Commerce.ProductName())
+            .RuleFor(o => o.Name, f => f.Commerce.ProductName())
             //A nullable int? with 80% probability of being null.
             //The .OrNull extension is in the Bogus.Extensions namespace.
             .RuleFor(o => o.Price, f => f.Random.Decimal(50, 100))
