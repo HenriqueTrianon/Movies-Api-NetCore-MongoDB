@@ -1,11 +1,8 @@
-﻿using System;
-using Autofac;
-using AutoMapper.Configuration.Annotations;
+﻿using Autofac;
 using Movies.Domain.Interfaces.Services;
 using Movies.Tests.Mock;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Movies.Tests.Services
 {
@@ -13,10 +10,10 @@ namespace Movies.Tests.Services
     {
         private IMovieService MovieService { get; }
         private ITestOutputHelper TestOutputHelper { get; }
-        public MovieServiceTest()
+        public MovieServiceTest(ITestOutputHelper output)
         {
             MovieService = container.Resolve<IMovieService>();
-            TestOutputHelper = new TestOutputHelper();
+            TestOutputHelper = output;
         }
    
         [Fact]
@@ -27,14 +24,21 @@ namespace Movies.Tests.Services
         }
 
         [Fact]
-        public void GetBookTest()
+        public void GetAllBookTest()
         {
             var task = MovieService.GetAllAsync();
             task.Wait();
-            foreach (var movieDto in task.Result)
+            var result = task.Result;
+            foreach (var movieDto in result)
             {
-                TestOutputHelper.WriteLine(movieDto.BookName);
+                TestOutputHelper.WriteLine($"{movieDto.Author} - {movieDto.BookName}");
             }
+        }
+
+        [Fact]
+        public void GetFirstBookTest()
+        {
+
         }
     }
 }

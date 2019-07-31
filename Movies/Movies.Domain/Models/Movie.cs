@@ -1,9 +1,9 @@
-﻿namespace Movies.Domain.Models
-{
-    public class Movie
-    {
-        public string Id { get; set; }
+﻿using Movies.Infra.Persistence;
 
+namespace Movies.Domain.Models
+{
+    public class Movie:BaseModifiableEntity<string>
+    {
         public string BookName { get; set; }
 
         public decimal Price { get; set; }

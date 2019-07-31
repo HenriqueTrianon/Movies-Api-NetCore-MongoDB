@@ -11,11 +11,11 @@ namespace Movies.Mongo.Repository.Configurations
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
-                map.MapIdMember(x => x.Id);
                 map.MapMember(x => x.Author).SetIsRequired(true);
                 map.MapMember(x => x.BookName).SetIsRequired(true);
                 map.MapMember(x => x.Category).SetIsRequired(false);
                 map.MapMember(x => x.Price).SetIsRequired(true);
+               
             });
         }
     }

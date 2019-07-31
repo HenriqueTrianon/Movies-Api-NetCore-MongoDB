@@ -8,9 +8,4 @@
     <PackageReference Include="AutoMapper" Version="8.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Movies.Infra.Extensions\Movies.Infra.Extensions.csproj" />
-    <ProjectReference Include="..\Movies.Infra.Persistence\Movies.Infra.Persistence.csproj" />
-  </ItemGroup>
-
 </Project>

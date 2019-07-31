@@ -18,7 +18,7 @@ namespace Movies.Tests.Mock
             //A nullable int? with 80% probability of being null.
             //The .OrNull extension is in the Bogus.Extensions namespace.
             .RuleFor(o => o.Price, f => f.Random.Decimal(50, 100))
-            .RuleFor(o => o.Category, f => f.Commerce.ProductMaterial());
+            .RuleFor(o => o.Category, f => f.Commerce.Categories(3));
 
         public static MovieDto Get() => _faker.Generate();
     }

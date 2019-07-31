@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using MongoDB.Driver;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Mongo.Repository.Context;
 using Movies.Mongo.Repository.Repository;
