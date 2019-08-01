@@ -12,6 +12,7 @@ namespace Movies.Domain.Interfaces.Repository
         Task<List<TModelDto>> GetAll(Expression<Func<TModel, bool>> func);
         Task<List<TModelDto>> GetAll();
         Task<TModelDto> GetFirstOrDefault(Expression<Func<TModel, bool>> func);
+        Task<TModelDto> GetLastOrDefault(Expression<Func<TModel, bool>> func);
         Task Update(TModelDto model);
         Task<bool> Delete(TIndex id);
     }

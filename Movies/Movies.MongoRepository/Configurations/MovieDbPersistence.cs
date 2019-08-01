@@ -2,7 +2,7 @@
 {
     public class MovieDbPersistence
     {
-        private static bool initialized = false;
+        private static bool initialized { get;set; } = false;
         public static void Configure()
         {
             if (!initialized)

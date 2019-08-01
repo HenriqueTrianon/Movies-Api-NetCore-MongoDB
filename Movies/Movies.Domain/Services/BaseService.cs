@@ -16,23 +16,39 @@ namespace Movies.Domain.Services
             MongoDbRepository = repository;
         }
 
-        public async Task Insert(TmodelDto model) =>
+        public async Task Insert(TmodelDto model)
+        {
             await MongoDbRepository.Insert(model);
+        }
 
-        public async Task<List<TmodelDto>> GetAll() =>
-            await MongoDbRepository.GetAll();
+        public async Task<List<TmodelDto>> GetAll()
+        {
+            return await MongoDbRepository.GetAll();
+        }
 
-        public async Task<List<TmodelDto>> GetAll(Expression<Func<TModel, bool>> func) =>
-            await MongoDbRepository.GetAll(func);
+        public async Task<List<TmodelDto>> GetAll(Expression<Func<TModel, bool>> func)
+        {
+            return await MongoDbRepository.GetAll(func);
+        }
 
-        public async Task<TmodelDto> GetFirstorDefault(Expression<Func<TModel, bool>> func) =>
-            await MongoDbRepository.GetFirstOrDefault(func);
+        public async Task<TmodelDto> GetFirstorDefault(Expression<Func<TModel, bool>> func)
+        {
+            return await MongoDbRepository.GetFirstOrDefault(func);
+        }
 
-        public async Task Update(TmodelDto dto) =>
+        public async Task<TmodelDto> GetLastorDefault(Expression<Func<TModel, bool>> func)
+        {
+            return await MongoDbRepository.GetLastOrDefault(func);
+        }
+
+        public async Task Update(TmodelDto dto)
+        {
             await MongoDbRepository.Update(dto);
+        }
 
-        public async Task<bool> DeleteById(Tindex id) =>
-            await MongoDbRepository.Delete(id);
-
+        public async Task<bool> DeleteById(Tindex id)
+        {
+            return await MongoDbRepository.Delete(id);
+        }
     }
 }

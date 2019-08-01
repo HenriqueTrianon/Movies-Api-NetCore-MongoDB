@@ -21,5 +21,6 @@ namespace Movies.Tests.Mock
             .RuleFor(o => o.Category, f => f.Commerce.Categories(3));
 
         public static MovieDto Get() => _faker.Generate();
+        
     }
 }

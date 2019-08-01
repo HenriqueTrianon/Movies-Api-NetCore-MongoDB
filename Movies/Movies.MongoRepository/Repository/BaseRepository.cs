@@ -10,7 +10,8 @@ using Movies.Mongo.Repository.Context;
 
 namespace Movies.Mongo.Repository.Repository
 {
-    public abstract class BaseRepository<TModelDto, TIndex, TModel> : IMongoDbRepository<TModel, TIndex, TModelDto> where TModel : IEntity<TIndex>
+    public abstract class BaseRepository<TModelDto, TIndex, TModel> : IMongoDbRepository<TModel, TIndex, TModelDto>
+            where TModel : IEntity<TIndex>
     {
         protected IMongoCollection<TModel> Collection { get; }
         protected abstract string CollectionName { get; }
@@ -20,23 +21,48 @@ namespace Movies.Mongo.Repository.Repository
             Collection = context.Database.GetCollection<TModel>(CollectionName);
         }
 
-        public async Task Insert(TModelDto model) =>
+        public async Task Insert(TModelDto model)
+        {
             await Collection.InsertOneAsync(model.MapTo<TModel>());
+        }
 
-        public async Task<List<TModelDto>> GetAll() =>
-            await Collection.Find(Builders<TModel>.Filter.Empty).Project<TModelDto>(null).ToListAsync();
+        public async Task<List<TModelDto>> GetAll()
+        {
+            return await Collection.Find(Builders<TModel>.Filter.Empty)
+                    .Project<TModelDto>(null)
+                    .ToListAsync();
+        }
 
-        public Task<TModelDto> GetFirstOrDefault(Expression<Func<TModel, bool>> func) =>
-                 Collection.Find(func).Project<TModelDto>(null).FirstOrDefaultAsync();
+        public Task<TModelDto> GetFirstOrDefault(Expression<Func<TModel, bool>> func)
+        {
+            return Collection.Find(func)
+                    .Project<TModelDto>(null)
+                    .FirstOrDefaultAsync();
+        }
+
+        public Task<TModelDto> GetLastOrDefault(Expression<Func<TModel, bool>> func)
+        {
+            return Collection.Find(func)
+                    .SortByDescending(e => e.Id)
+                    .Project<TModelDto>(null)
+                    .FirstOrDefaultAsync();
+        }
 
         public async Task Update(TModelDto dto)
         {
             var model = dto.MapTo<TModel>();
-            await Collection.ReplaceOneAsync(b => b.Id.Equals(model.Id), model, new UpdateOptions { IsUpsert = true });
+            await Collection.ReplaceOneAsync(b => b.Id.Equals(model.Id), model, new UpdateOptions
+            {
+                    IsUpsert = true
+            });
         }
 
-        public async Task<List<TModelDto>> GetAll(Expression<Func<TModel, bool>> func) =>
-            await Collection.Find(func).Project<TModelDto>(null).ToListAsync();
+        public async Task<List<TModelDto>> GetAll(Expression<Func<TModel, bool>> func)
+        {
+            return await Collection.Find(func)
+                    .Project<TModelDto>(null)
+                    .ToListAsync();
+        }
 
         public async Task<bool> Delete(TIndex id)
         {
