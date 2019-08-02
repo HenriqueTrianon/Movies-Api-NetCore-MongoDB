@@ -1,7 +1,6 @@
 ﻿
 using System.Reflection;
 using Autofac;
-using Autofac.Integration.WebApi;
 using Movies.Infra.IOC.Modules;
 
 namespace Movies.Infra.IOC.Containers
@@ -13,8 +12,6 @@ namespace Movies.Infra.IOC.Containers
         public static IContainer Build(ContainerBuilder builder)
         {
             // Register your Web API controllers.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterWebApiModelBinderProvider();
             RegisterTypes(builder);
             return builder.Build();
         }
@@ -22,8 +19,8 @@ namespace Movies.Infra.IOC.Containers
         {
             builder = new ContainerBuilder();
             // Register your Web API controllers.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterWebApiModelBinderProvider();
+            //builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            //builder.RegisterWebApiModelBinderProvider();
             RegisterTypes(builder);
             return builder.Build();
         }

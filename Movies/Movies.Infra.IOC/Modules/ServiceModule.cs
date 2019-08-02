@@ -9,7 +9,6 @@ namespace Movies.Infra.IOC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<MovieService>().As<IMovieService>();
-           
         }
     }
 }

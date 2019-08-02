@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Autofac.Integration.WebApi;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,14 +27,15 @@ namespace Movies.Api
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                     .AddEnvironmentVariables();
-            MovieContainerBuilder.Build();
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
         }
+
+        public IContainer ApplicationContainer { get; private set; }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -56,13 +58,25 @@ namespace Movies.Api
                 var caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
                 c.IncludeXmlComments(caminhoXmlDoc);
             });
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            ApplicationContainer = MovieContainerBuilder.Build(builder);
+            // Create the IServiceProvider based on the container.
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app,
+                ILoggerFactory loggerFactory,
+                IApplicationLifetime appLifetime,
+                IHostingEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            app.UseMvc();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -70,6 +84,7 @@ namespace Movies.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json",
                         "Movie API");
             });
+            app.UseMvc(routes => { routes.MapRoute("default", "{controller=Movies}/{action=Index}/{id?}"); });
         }
     }
 }
