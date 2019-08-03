@@ -77,7 +77,6 @@ namespace Movies.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

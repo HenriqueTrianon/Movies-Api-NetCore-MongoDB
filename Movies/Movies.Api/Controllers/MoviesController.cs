@@ -9,6 +9,8 @@ using Movies.Domain.Interfaces.Services;
 
 namespace Movies.Api.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class MoviesController : Controller
     {
         private IMovieService MovieService { get; }
@@ -71,6 +73,7 @@ namespace Movies.Api.Controllers
         /// <param name="id">Identifier of the movie.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [ProducesDefaultResponseType]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id) =>
                 Ok(await MovieService.DeleteById(id));
