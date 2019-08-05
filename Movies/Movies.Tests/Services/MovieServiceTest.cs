@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
-using Autofac;
+﻿using Autofac;
 using Bogus;
+using Movies.Domain.DTO;
 using Movies.Domain.Interfaces.Services;
 using Movies.Tests.Mock;
 using Xunit;
@@ -20,7 +19,14 @@ namespace Movies.Tests.Services
             TestOutputHelper = output;
             Faker = new Faker();
         }
-
+        [Fact]
+        public void InsertNewBookEmptyTest()
+        {
+            var dto = new MovieDto();
+            var task = MovieService.Insert(dto);
+            task.Wait();
+            TestOutputHelper.WriteLine($"Inserted {dto.Name} - {dto.Author} - {dto.Price}");
+        }
         [Fact]
         public void InsertNewBookTest()
         {

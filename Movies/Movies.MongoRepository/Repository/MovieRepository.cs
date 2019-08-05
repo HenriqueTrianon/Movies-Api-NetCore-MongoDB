@@ -1,4 +1,6 @@
-﻿using Movies.Domain.DTO;
+﻿using System.Threading.Tasks;
+using MongoDB.Bson;
+using Movies.Domain.DTO;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Models;
 using Movies.Mongo.Repository.Context;
@@ -13,5 +15,10 @@ namespace Movies.Mongo.Repository.Repository
 
         }
 
+        public override Task Insert(MovieDto dto)
+        {
+            dto.Id = ObjectId.GenerateNewId().ToString();
+            return base.Insert(dto);
+        }
     }
 }

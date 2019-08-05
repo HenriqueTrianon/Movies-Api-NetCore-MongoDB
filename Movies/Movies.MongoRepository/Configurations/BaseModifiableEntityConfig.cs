@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MongoDB.Bson.Serialization;
+﻿using MongoDB.Bson.Serialization;
 using Movies.Infra.Persistence;
 
 namespace Movies.Mongo.Repository.Configurations

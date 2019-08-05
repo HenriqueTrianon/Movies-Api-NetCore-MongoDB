@@ -15,7 +15,6 @@ namespace Movies.Tests
         {
             container = MovieContainerBuilder.Build();
             Mapper.Initialize(cfg => cfg.AddProfile<MoviesDomainProfile>());
-           
             MovieDbPersistence.Configure();
         }
 

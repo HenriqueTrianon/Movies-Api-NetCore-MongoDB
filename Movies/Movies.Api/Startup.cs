@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Movies.Domain.Mapper;
 using Movies.Infra.IOC.Containers;
 using Swashbuckle.AspNetCore.Swagger;
+using FluentValidation.AspNetCore;
 
 namespace Movies.Api
 {
@@ -38,7 +36,8 @@ namespace Movies.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                    .AddFluentValidation();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -61,6 +60,8 @@ namespace Movies.Api
             var builder = new ContainerBuilder();
             builder.Populate(services);
             ApplicationContainer = MovieContainerBuilder.Build(builder);
+
+            Mapper.Initialize(cfg => cfg.AddProfile<MoviesDomainProfile>());
             // Create the IServiceProvider based on the container.
             return new AutofacServiceProvider(ApplicationContainer);
         }

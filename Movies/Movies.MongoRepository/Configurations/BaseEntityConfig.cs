@@ -12,6 +12,7 @@ namespace Movies.Mongo.Repository.Configurations
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.MapIdMember(x => x.Id).SetIsRequired(true);
+                
             });
         }
         

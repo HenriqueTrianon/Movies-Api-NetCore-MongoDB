@@ -1,6 +1,4 @@
-﻿
-using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Movies.Infra.IOC.Modules;
 
 namespace Movies.Infra.IOC.Containers
@@ -31,6 +29,7 @@ namespace Movies.Infra.IOC.Containers
             builder.RegisterModule<MapperModule>();
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<ValidatorModule>();
         }
     }
 }
