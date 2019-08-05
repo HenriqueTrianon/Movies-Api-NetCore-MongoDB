@@ -18,14 +18,13 @@ namespace Movies.Api.Controllers
         }
 
         /// <summary>
-        /// All the movies as json.
+        /// Gets the top 10 movies.
         /// </summary>     
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             return Json(await MovieService.GetAll());
         }
-
         /// <summary>   
         /// Creates a Movie.
         /// </summary>

@@ -31,6 +31,7 @@ namespace Movies.Mongo.Repository.Repository
         {
             return await Collection.Find(Builders<TModel>.Filter.Empty)
                     .Project<TModelDto>(null)
+                    .Limit(10)
                     .ToListAsync();
         }
 
@@ -38,6 +39,7 @@ namespace Movies.Mongo.Repository.Repository
         {
             return  await Collection.Find(func)
                     .Project<TModelDto>(null)
+                    .Limit(10)
                     .FirstOrDefaultAsync();
         }
 
