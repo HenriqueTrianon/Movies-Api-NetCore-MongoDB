@@ -3,26 +3,37 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Interfaces.Services;
 using Movies.Infra.Persistence;
 
 namespace Movies.Domain.Services
 {
-    public abstract class BaseService<TmodelDto, Tindex, TModel> : IService<TmodelDto, Tindex, TModel> where TModel : IEntity<Tindex>
+    public abstract class BaseService<TmodelDto, Tindex, TModel> : IService<TmodelDto, Tindex, TModel>
+            where TModel : IEntity<Tindex>
     {
         protected IValidator<TmodelDto> Validator { get; }
         protected IMongoDbRepository<TModel, Tindex, TmodelDto> MongoDbRepository { get; }
+
         protected BaseService(IMongoDbRepository<TModel, Tindex, TmodelDto> repository, IValidator<TmodelDto> validator)
         {
             MongoDbRepository = repository;
             Validator = validator;
         }
 
-        public async Task Insert(TmodelDto model)
+        public async Task Validate(TmodelDto dto)
         {
-            await Validator.ValidateAsync(model);
-            await MongoDbRepository.Insert(model);
+            await Validator.ValidateAndThrowAsync(dto);
+        }
+
+        public async Task Insert(TmodelDto dto,bool validate = true)
+        {
+            if (validate)
+            {
+                await Validate(dto);
+            }
+            await MongoDbRepository.Insert(dto);
         }
 
         public async Task<List<TmodelDto>> GetAll()
@@ -45,9 +56,12 @@ namespace Movies.Domain.Services
             return await MongoDbRepository.GetLastOrDefault(func);
         }
 
-        public async Task Update(TmodelDto dto)
+        public async Task Update(TmodelDto dto,bool validate = true)
         {
-            await Validator.ValidateAsync(dto);
+            if (validate)
+            {
+                await Validate(dto);
+            }
             await MongoDbRepository.Update(dto);
         }
 

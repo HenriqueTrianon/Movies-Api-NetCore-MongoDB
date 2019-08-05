@@ -57,7 +57,9 @@ namespace Movies.Api.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Delete(string id) =>
-            Ok(await MovieService.DeleteById(id));
+        public async Task<ActionResult> Delete(string id)
+        {
+            return Ok(await MovieService.DeleteById(id));
+        }
     }
 }

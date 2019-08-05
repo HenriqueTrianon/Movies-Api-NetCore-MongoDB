@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
 namespace Movies.Domain.Interfaces.Services
 {
     public interface IService<TModelDTO, in TIndex, TModel>
     {
-        Task Insert(TModelDTO model);
+        Task Validate(TModelDTO dto);
+        Task Insert(TModelDTO dto, bool validate = false);
         Task<List<TModelDTO>> GetAll();
         Task<List<TModelDTO>> GetAll(Expression<Func<TModel, bool>> func);
         Task<TModelDTO> GetFirstorDefault(Expression<Func<TModel, bool>> func);
         Task<TModelDTO> GetLastorDefault(Expression<Func<TModel, bool>> func);
-        Task Update(TModelDTO dto);
+        Task Update(TModelDTO dto, bool validate = false);
         Task<bool> DeleteById(TIndex id);
     }
 }

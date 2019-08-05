@@ -23,17 +23,20 @@ namespace Movies.Tests.Services
         public void InsertNewBookEmptyTest()
         {
             var dto = new MovieDto();
+            MovieService.Validate(dto).Wait();
             var task = MovieService.Insert(dto);
+            TestOutputHelper.WriteLine($"Inserting...  {dto.Name} - {dto.Author} - {dto.Price}");
             task.Wait();
-            TestOutputHelper.WriteLine($"Inserted {dto.Name} - {dto.Author} - {dto.Price}");
+            TestOutputHelper.WriteLine("Done");
         }
         [Fact]
         public void InsertNewBookTest()
         {
             var dto = MovieMocker.Get();
-            var task = MovieService.Insert(dto);
+;            var task = MovieService.Insert(dto);
+            TestOutputHelper.WriteLine($"Inserting...  {dto.Name} - {dto.Author} - {dto.Price}");
             task.Wait();
-            TestOutputHelper.WriteLine($"Inserted {dto.Name} - {dto.Author} - {dto.Price}");
+            TestOutputHelper.WriteLine("Done");
         }
 
         [Fact]

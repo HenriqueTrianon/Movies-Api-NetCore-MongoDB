@@ -7,10 +7,10 @@ namespace Movies.Domain.Validators
     {
         public MovieValidator()
         {
-            RuleFor(x => x.Name).Length(5, 100);
-            RuleFor(x => x.Category).NotEmpty();
-            RuleFor(x => x.Price).GreaterThan(0);
-            RuleFor(x => x.Author).Length(3, 100);
+            RuleFor(x => x.Name).NotNull().Length(5, 100);
+            RuleFor(x => x.Category).NotNull().NotEmpty();
+            RuleFor(x => x.Price).NotNull().GreaterThan(0);
+            RuleFor(x => x.Author).NotNull().Length(3, 100);
         }
     }
 }
