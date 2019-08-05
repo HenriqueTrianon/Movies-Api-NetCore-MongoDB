@@ -23,7 +23,6 @@ namespace Movies.Tests.Services
         public void InsertNewBookEmptyTest()
         {
             var dto = new MovieDto();
-            MovieService.Validate(dto).Wait();
             var task = MovieService.Insert(dto);
             TestOutputHelper.WriteLine($"Inserting...  {dto.Name} - {dto.Author} - {dto.Price}");
             task.Wait();
