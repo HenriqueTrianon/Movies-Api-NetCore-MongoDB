@@ -1,4 +1,5 @@
-﻿namespace Movies.Domain.DTO
+﻿using System.ComponentModel;
+namespace Movies.Domain.DTO
 {
     public class MovieDto
     {

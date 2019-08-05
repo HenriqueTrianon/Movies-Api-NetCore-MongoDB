@@ -11,9 +11,11 @@ namespace Movies.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class MoviesController : Controller
     {
         private IMovieService MovieService { get; }
+
         public MoviesController(IMovieService movieService)
         {
             MovieService = movieService;
@@ -28,23 +30,9 @@ namespace Movies.Api.Controllers
             return Json(await MovieService.GetAll());
         }
 
-        /// <summary>
+        /// <summary>   
         /// Creates a Movie.
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// POST /Todo
-        ///     {
-        ///"name": "The Big Black Garden",
-        ///"price": 92.377658347775050,
-        ///"category": [
-        ///"Movies",
-        ///"Games",
-        ///"Music"
-        ///],
-        ///"author": "Sylvester is Alone"
-        ///     }
-        /// </remarks>
         /// <param name="movie"></param>
         /// <returns>A newly created Movie</returns>
         /// <response code="201">Returns the newly created item</response>
@@ -53,20 +41,19 @@ namespace Movies.Api.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([FromBody]MovieDto movie)
+        public async Task<ActionResult> Create([FromBody] MovieDto movie)
         {
             await MovieService.Insert(movie);
             return Ok();
         }
 
         [HttpPut]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([FromBody]MovieDto movieDto)
+        public async Task<ActionResult> Edit([FromBody] MovieDto movieDto)
         {
             await MovieService.Update(movieDto);
             return Ok();
         }
+
         /// <summary>
         /// Delete a movie by the id.
         /// </summary>
@@ -74,8 +61,7 @@ namespace Movies.Api.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id) =>
-                Ok(await MovieService.DeleteById(id));
+            Ok(await MovieService.DeleteById(id));
     }
 }

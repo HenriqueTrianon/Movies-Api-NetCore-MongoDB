@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
 using Movies.Domain.Models;
 
 namespace Movies.Mongo.Repository.Configurations

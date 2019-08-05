@@ -31,6 +31,7 @@ namespace Movies.Infra.IOC.Containers
             builder.RegisterModule<MapperModule>();
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<ValidatorModule>();
         }
     }
 }
