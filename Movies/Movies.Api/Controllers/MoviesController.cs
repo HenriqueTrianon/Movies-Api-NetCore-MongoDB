@@ -17,10 +17,10 @@ namespace Movies.Api.Controllers
             MovieService = movieService;
         }
 
-        [HttpGet]
         /// <summary>
-        /// Gets all the movies as json.
+        /// All the movies as json.
         /// </summary>     
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             return Json(await MovieService.GetAll());
@@ -43,6 +43,11 @@ namespace Movies.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Change a movie
+        /// </summary>
+        /// <param name="movieDto"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult> Edit([FromBody] MovieDto movieDto)
         {
