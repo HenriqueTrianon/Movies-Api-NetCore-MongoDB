@@ -28,7 +28,7 @@ namespace Movies.Tests.Services
             await Assert.ThrowsAsync<FluentValidation.ValidationException>(async () => await task);
         }
         [Fact]
-        public async void InsertNewBookTest()
+        public async void InsertNewMovieTest()
         {
             var dto = MovieMocker.Get();
             await MovieService.Insert(dto);
