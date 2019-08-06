@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Bogus;
 using Movies.Domain.DTO;
 using Movies.Domain.Interfaces.Services;
@@ -20,90 +21,60 @@ namespace Movies.Tests.Services
             Faker = new Faker();
         }
         [Fact]
-        public void InsertNewBookEmptyTest()
+        public async void InsertEmptyMovieTest()
         {
             var dto = new MovieDto();
             var task = MovieService.Insert(dto);
-            TestOutputHelper.WriteLine($"Inserting...  {dto.Name} - {dto.Author} - {dto.Price}");
-            task.Wait();
-            TestOutputHelper.WriteLine("Done");
+            await Assert.ThrowsAsync<FluentValidation.ValidationException>(async () => await task);
         }
         [Fact]
-        public void InsertNewBookTest()
+        public async void InsertNewBookTest()
         {
             var dto = MovieMocker.Get();
-;            var task = MovieService.Insert(dto);
-            TestOutputHelper.WriteLine($"Inserting...  {dto.Name} - {dto.Author} - {dto.Price}");
-            task.Wait();
-            TestOutputHelper.WriteLine("Done");
+            await MovieService.Insert(dto);
         }
 
         [Fact]
-        public void GetAllMovieTest()
+        public async void GetAllMovieTest()
         {
-            var task = MovieService.GetAll();
-            task.Wait();
-            var result = task.Result;
-            result.ForEach(e => TestOutputHelper.WriteLine($"{e.Author} - {e.Name} - {e.Price}$"));
+            var result = await MovieService.GetAll();
             Assert.NotNull(result);
         }
 
         [Fact]
-        public void GetAllMovieExpressionTest()
+        public async void GetAllMovieExpressionTest()
         {
-            var task = MovieService.GetAll(e => e.Price > 70);
-            task.Wait();
-            var result = task.Result;
-            foreach (var movieDto in result)
-            {
-                TestOutputHelper.WriteLine($"{movieDto.Author} - {movieDto.Name}");
-            }
+            var result = await MovieService.GetAll(e => e.Price > 70);
             Assert.NotNull(result);
         }
 
         [Fact]
-        public void GetFirstMovieTest()
+        public async void GetFirstMovieTest()
         {
-            var task = MovieService.GetFirstorDefault(e => e.Author.StartsWith("Ca"));
-            task.Wait();
-            var movie = task.Result;
-            if (movie != null)
-            {
-                TestOutputHelper.WriteLine($"{movie.Author} - {movie.Name}");
-            }
+            var movie = await MovieService.GetFirstorDefault(e => true);
             Assert.NotNull(movie);
+            TestOutputHelper.WriteLine($"{movie.Author} - {movie.Name}");
         }
 
         [Fact]
-        public void GetFirstAndUpdate()
+        public async void GetFirstAndUpdate()
         {
-            var task = MovieService.GetFirstorDefault(e => true);
-            task.Wait();
-            var movie = task.Result;
-            if (movie == null)
-            {
-                return;
-            }
+            var movie = await MovieService.GetFirstorDefault(e => true);
+            Assert.NotNull(movie);
             TestOutputHelper.WriteLine($"actual... {movie.Author} - {movie.Name}");
             movie.Author = Faker.Person.FullName;
             movie.Name = Faker.Commerce.ProductAdjective();
             var updateTask = MovieService.Update(movie);
-            TestOutputHelper.WriteLine($"changed into...  {movie.Author} - {movie.Name}");
             updateTask.Wait();
-            TestOutputHelper.WriteLine("Data Updated");
+            TestOutputHelper.WriteLine($"changed into...  {movie.Author} - {movie.Name}");
         }
 
         [Fact]
-        public void DeleteLastOne()
+        public async void DeleteLastOne()
         {
-            var task = MovieService.GetLastorDefault(e => true);
-            task.Wait();
-            var movie = task.Result;
-            if (movie == null)
-            {
-                return;
-            }
-            TestOutputHelper.WriteLine($"Element to be removed...{movie.Name}");
+            var movie = await MovieService.GetLastorDefault(e => true);
+            Assert.NotNull(movie);
+            TestOutputHelper.WriteLine($"The movie {movie.Name} of {movie.Author} has been removed.");
             var deleteTask = MovieService.DeleteById(movie.Id);
             deleteTask.Wait();
             Assert.True(deleteTask.Result);

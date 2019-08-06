@@ -13,7 +13,7 @@ namespace Movies.Domain.Interfaces.Services
         Task<List<TModelDTO>> GetAll();
         Task<List<TModelDTO>> GetAll(Expression<Func<TModel, bool>> func);
         Task<TModelDTO> GetFirstorDefault(Expression<Func<TModel, bool>> func);
-        Task<TModelDTO> GetLastorDefault(Expression<Func<TModel, bool>> func);
+        Task<TModelDTO> GetLastorDefault(Expression<Func<TModel, bool>> func );
         Task Update(TModelDTO dto, bool validate = true);
         Task<bool> DeleteById(TIndex id);
     }
