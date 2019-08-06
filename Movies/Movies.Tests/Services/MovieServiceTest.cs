@@ -28,7 +28,7 @@ namespace Movies.Tests.Services
             await Assert.ThrowsAsync<FluentValidation.ValidationException>(async () => await task);
         }
         [Fact]
-        public async void InsertNewBookTest()
+        public async void InsertNewMovieTest()
         {
             var dto = MovieMocker.Get();
             await MovieService.Insert(dto);
@@ -64,8 +64,7 @@ namespace Movies.Tests.Services
             TestOutputHelper.WriteLine($"actual... {movie.Author} - {movie.Name}");
             movie.Author = Faker.Person.FullName;
             movie.Name = Faker.Commerce.ProductAdjective();
-            var updateTask = MovieService.Update(movie);
-            updateTask.Wait();
+            await MovieService.Update(movie);
             TestOutputHelper.WriteLine($"changed into...  {movie.Author} - {movie.Name}");
         }
 
@@ -75,9 +74,7 @@ namespace Movies.Tests.Services
             var movie = await MovieService.GetLastorDefault(e => true);
             Assert.NotNull(movie);
             TestOutputHelper.WriteLine($"The movie {movie.Name} of {movie.Author} has been removed.");
-            var deleteTask = MovieService.DeleteById(movie.Id);
-            deleteTask.Wait();
-            Assert.True(deleteTask.Result);
+            Assert.True(await MovieService.DeleteById(movie.Id));
         }
     }
 }
