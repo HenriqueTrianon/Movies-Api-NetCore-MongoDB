@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Movies.Infra.Core\Movies.Infra.Core.csproj" />
     <ProjectReference Include="..\Movies.Infra.Extensions\Movies.Infra.Extensions.csproj" />
-    <ProjectReference Include="..\Movies.Infra.Persistence\Movies.Infra.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

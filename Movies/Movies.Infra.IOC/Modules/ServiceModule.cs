@@ -2,7 +2,7 @@
 using Movies.Domain.Interfaces.Services;
 using Movies.Domain.Services;
 
-namespace Movies.Infra.IOC
+namespace Movies.Infra.IOC.Modules
 {
     public class ServiceModule:Module
     {

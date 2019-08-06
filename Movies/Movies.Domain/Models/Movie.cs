@@ -1,4 +1,4 @@
-﻿using Movies.Infra.Persistence;
+﻿using Movies.Infra.Core;
 
 namespace Movies.Domain.Models
 {

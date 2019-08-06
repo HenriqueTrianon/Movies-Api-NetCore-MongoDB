@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Infra.Persistence
+namespace Movies.Infra.Core
 {
     public interface IModifiableEntity<T>:IEntity<T>
     {

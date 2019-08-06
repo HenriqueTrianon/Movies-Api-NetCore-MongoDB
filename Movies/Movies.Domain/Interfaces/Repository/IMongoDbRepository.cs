@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Movies.Infra.Persistence;
+using Movies.Infra.Core;
 
 namespace Movies.Domain.Interfaces.Repository
 {

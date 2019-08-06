@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Interfaces.Services;
-using Movies.Infra.Persistence;
+using Movies.Infra.Core;
 
 namespace Movies.Domain.Services
 {

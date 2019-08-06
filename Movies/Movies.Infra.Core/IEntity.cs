@@ -1,4 +1,4 @@
-﻿namespace Movies.Infra.Persistence
+﻿namespace Movies.Infra.Core
 {
     public interface IEntity<T> 
     {

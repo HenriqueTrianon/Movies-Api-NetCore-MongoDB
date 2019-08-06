@@ -1,5 +1,5 @@
 ﻿using MongoDB.Bson.Serialization;
-using Movies.Infra.Persistence;
+using Movies.Infra.Core;
 
 namespace Movies.Mongo.Repository.Configurations
 {

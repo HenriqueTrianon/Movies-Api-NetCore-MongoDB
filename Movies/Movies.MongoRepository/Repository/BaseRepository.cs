@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Infra.Extensions;
-using Movies.Infra.Persistence;
+using Movies.Infra.Core;
 using Movies.Mongo.Repository.Context;
 
 namespace Movies.Mongo.Repository.Repository

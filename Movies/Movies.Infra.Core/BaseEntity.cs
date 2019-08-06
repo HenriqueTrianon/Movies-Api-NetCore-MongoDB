@@ -1,4 +1,4 @@
-﻿namespace Movies.Infra.Persistence
+﻿namespace Movies.Infra.Core
 {
     public abstract class BaseEntity<T>:IEntity<T>
     {
