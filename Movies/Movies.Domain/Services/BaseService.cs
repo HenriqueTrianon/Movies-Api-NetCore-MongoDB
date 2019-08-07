@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentValidation;
-using FluentValidation.Results;
 using Movies.Domain.Interfaces.Repository;
 using Movies.Domain.Interfaces.Services;
 using Movies.Infra.Core;
