@@ -21,13 +21,13 @@ namespace Movies.Mongo.Repository.Repository
             Collection = context.Database.GetCollection<TModel>(CollectionName);
         }
 
-        public async virtual Task Insert(TModelDto dto)
+        public virtual async Task Insert(TModelDto dto)
         {
             var model = dto.MapTo<TModel>();
             await Collection.InsertOneAsync(model);
         }
 
-        public async virtual Task<List<TModelDto>> GetAll()
+        public virtual async Task<List<TModelDto>> GetAll()
         {
             return await Collection.Find(Builders<TModel>.Filter.Empty)
                     .Project<TModelDto>(null)
@@ -35,7 +35,7 @@ namespace Movies.Mongo.Repository.Repository
                     .ToListAsync();
         }
 
-        public async virtual Task<TModelDto> GetFirstOrDefault(Expression<Func<TModel, bool>> func)
+        public virtual async Task<TModelDto> GetFirstOrDefault(Expression<Func<TModel, bool>> func)
         {
             return  await Collection.Find(func)
                     .Project<TModelDto>(null)
@@ -43,7 +43,7 @@ namespace Movies.Mongo.Repository.Repository
                     .FirstOrDefaultAsync();
         }
 
-        public async virtual Task<TModelDto> GetLastOrDefault(Expression<Func<TModel, bool>> func)
+        public virtual async Task<TModelDto> GetLastOrDefault(Expression<Func<TModel, bool>> func)
         {
             return await Collection.Find(func)
                     .SortByDescending(e => e.Id)
@@ -51,7 +51,7 @@ namespace Movies.Mongo.Repository.Repository
                     .FirstOrDefaultAsync();
         }
 
-        public async virtual Task Update(TModelDto dto)
+        public virtual async Task Update(TModelDto dto)
         {
             var model = dto.MapTo<TModel>();
             await Collection.ReplaceOneAsync(b => b.Id.Equals(model.Id), model, new UpdateOptions
@@ -60,14 +60,14 @@ namespace Movies.Mongo.Repository.Repository
             });
         }
 
-        public async virtual Task<List<TModelDto>> GetAll(Expression<Func<TModel, bool>> func)
+        public virtual async Task<List<TModelDto>> GetAll(Expression<Func<TModel, bool>> func)
         {
             return await Collection.Find(func)
                     .Project<TModelDto>(null)
                     .ToListAsync();
         }
 
-        public async virtual Task<bool> Delete(TIndex id)
+        public virtual async Task<bool> Delete(TIndex id)
         {
             var result = await Collection.DeleteOneAsync(b => b.Id.Equals(id));
             return result.DeletedCount != 0;
